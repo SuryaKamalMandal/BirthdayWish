@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday 🎉</title>
+
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      overflow-y:auto;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Poppins', sans-serif;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      background: linear-gradient(135deg, #FFD93D, #FFE066, #FFF3B0);
+      padding:30px 20px;
+      overflow-x:hidden;
+      overflow-y:auto;
+    }
+
+    /* SCROLLBAR */
+
+    ::-webkit-scrollbar{
+      width:10px;
+    }
+
+    ::-webkit-scrollbar-track{
+      background:rgba(255,255,255,0.3);
+    }
+
+    ::-webkit-scrollbar-thumb{
+      background:#ff4f81;
+      border-radius:20px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover{
+      background:#ff2e6d;
+    }
+
+    .container{
+      width:100%;
+      max-width:500px;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(10px);
+      border-radius:25px;
+      padding:30px 20px;
+      text-align:center;
+      color:#5c4300;
+      box-shadow:0 8px 30px rgba(0,0,0,0.15);
+      animation:fadeIn 1.2s ease;
+      margin-bottom:30px;
+    }
+
+    h1{
+      font-size:2.5rem;
+      margin-bottom:15px;
+      animation:bounce 2s infinite;
+    }
+
+    .cake{
+      font-size:4.5rem;
+      margin-bottom:20px;
+    }
+
+    button{
+      background:white;
+      color:#c28b00;
+      border:none;
+      padding:14px 28px;
+      border-radius:50px;
+      font-size:1rem;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.3s;
+      box-shadow:0 4px 15px rgba(0,0,0,0.2);
+      margin-top:15px;
+    }
+
+    button:hover{
+      transform:scale(1.08);
+      background:#f4b400;
+      color:white;
+    }
+
+    .video-container{
+      display:none;
+      margin-top:20px;
+      width:100%;
+      animation:fadeIn 1s ease;
+    }
+
+    video{
+      width:100%;
+      border-radius:20px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.3);
+      background:black;
+    }
+
+    .reveal-btn{
+      display:none;
+    }
+
+    .memory-container{
+      display:none;
+      margin-top:20px;
+      animation:fadeIn 1s ease;
+    }
+
+    .memory-container img{
+      width:100%;
+      border-radius:20px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.25);
+    }
+
+    .memory-title{
+      margin-top:15px;
+      font-size:1.2rem;
+      font-weight:600;
+      color:#7a5400;
+    }
+
+    .celebrate-btn{
+      display:none;
+    }
+
+    .message{
+      font-size:1.1rem;
+      line-height:1.8;
+      margin-top:20px;
+      opacity:0;
+      max-height:0;
+      overflow:hidden;
+      transition:all 0.8s ease;
+    }
+
+    .message.show{
+      opacity:1;
+      max-height:400px;
+    }
+
+    .footer{
+      margin-top:25px;
+      font-size:0.95rem;
+      opacity:0.9;
+      color:#6b4f00;
+    }
+
+    @keyframes bounce{
+      0%,100%{
+        transform:translateY(0);
+      }
+
+      50%{
+        transform:translateY(-8px);
+      }
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(30px);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    /* MOBILE */
+
+    @media(max-width:480px){
+
+      body{
+        padding:20px 15px;
+      }
+
+      .container{
+        padding:25px 18px;
+      }
+
+      h1{
+        font-size:2rem;
+      }
+
+      .cake{
+        font-size:4rem;
+      }
+
+      .message{
+        font-size:1rem;
+      }
+
+      button{
+        width:100%;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Happy Birthday Sonu 🎉</h1>
+
+    <div class="cake">🎂🎈</div>
+
+    <!-- WATCH BUTTON -->
+
+    <button id="watchBtn" onclick="playVideo()">
+      Watch ▶
+    </button>
+
+    <!-- VIDEO PLAYER -->
+
+    <div class="video-container" id="videoContainer">
+
+      <video id="birthdayVideo" controls>
+        <source src="MujheHaqHai.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+    </div>
+
+    <!-- REVEAL BUTTON -->
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealMemory()">
+      Reveal Memory 🎁
+    </button>
+
+    <!-- MEMORY IMAGE -->
+
+    <div class="memory-container" id="memoryContainer">
+
+      <img src="SoniaMemory.jpeg" alt="Memories">
+
+      <div class="memory-title">
+        Cute memories never fade 💛
+      </div>
+
+    </div>
+
+    <!-- CELEBRATE BUTTON -->
+
+    <button class="celebrate-btn" id="celebrateBtn" onclick="startCelebration()">
+      Celebrate 🎊
+    </button>
+
+    <!-- MESSAGE -->
+
+    <div class="message" id="birthdayMessage">
+
+      Birthdays are a new start, a fresh beginning and a time to pursue new endeavors with new goals. Move forward with confidence and courage. May today and all of your days be amazing!
+HAPPY BIRTHDAY SONU! <br><br>
+
+      May all your dreams come true! 💖
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+      Happy 26th Birthday! Hope your year is filled with happiness, success and endless smiles 💛
+    </div>
+
+  </div>
+
+  <script>
+
+    const watchBtn = document.getElementById("watchBtn");
+    const videoContainer = document.getElementById("videoContainer");
+    const video = document.getElementById("birthdayVideo");
+
+    const revealBtn = document.getElementById("revealBtn");
+
+    const memoryContainer = document.getElementById("memoryContainer");
+
+    const celebrateBtn = document.getElementById("celebrateBtn");
+
+    // PLAY VIDEO
+
+    function playVideo(){
+
+      watchBtn.style.display = "none";
+
+      videoContainer.style.display = "block";
+
+      videoContainer.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+
+      video.play();
+
+    }
+
+    // VIDEO END EVENT
+
+    video.addEventListener("ended", function(){
+
+      revealBtn.style.display = "inline-block";
+
+      revealBtn.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+
+      // Small Confetti
+
+      confetti({
+        particleCount:80,
+        spread:90,
+        origin:{ y:0.6 }
+      });
+
+    });
+
+    // REVEAL MEMORY IMAGE
+
+    function revealMemory(){
+
+      revealBtn.style.display = "none";
+
+      memoryContainer.style.display = "block";
+
+      celebrateBtn.style.display = "inline-block";
+
+      memoryContainer.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+
+      // Cute Confetti
+
+      confetti({
+        particleCount:120,
+        spread:100,
+        origin:{ y:0.6 }
+      });
+
+    }
+
+    // FINAL CELEBRATION
+
+    function startCelebration(){
+
+      document.getElementById("birthdayMessage")
+              .classList.add("show");
+
+      document.getElementById("birthdayMessage")
+              .scrollIntoView({
+                behavior:"smooth",
+                block:"center"
+              });
+
+      // Main Confetti Blast
+
+      confetti({
+        particleCount:200,
+        spread:120,
+        origin:{ y:0.6 }
+      });
+
+      // Side Confetti Animation
+
+      const duration = 3 * 1000;
+
+      const animationEnd = Date.now() + duration;
+
+      const interval = setInterval(function(){
+
+        if(Date.now() > animationEnd){
+          return clearInterval(interval);
+        }
+
+        confetti({
+          particleCount:6,
+          angle:60,
+          spread:60,
+          origin:{ x:0 }
+        });
+
+        confetti({
+          particleCount:6,
+          angle:120,
+          spread:60,
+          origin:{ x:1 }
+        });
+
+      },250);
+
+    }
+
+  </script>
+
+</body>
+
+</html>
